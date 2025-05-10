@@ -6,7 +6,8 @@
 }
 
 body {
-    background: linear-gradient(180deg, #E6E6FA 0%, #483D8B 100%);
+    /* Imagem de fundo com gradiente como fallback */
+    background: linear-gradient(180deg, #E6E6FA 0%, #483D8B 100%), url('background.jpg') no-repeat center center/cover;
     color: #fff;
     min-height: 100vh;
 }
@@ -53,7 +54,6 @@ nav ul li a:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: url('mountains-bg.png') no-repeat center center/cover;
 }
 
 .glass-container {
@@ -84,6 +84,7 @@ nav ul li a:hover {
     border-radius: 25px;
     font-size: 18px;
     transition: background 0.3s;
+    display: inline-block;
 }
 
 .cta-button:hover, .download-button:hover, .discord-button:hover {
