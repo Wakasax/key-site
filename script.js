@@ -1,58 +1,34 @@
-// Configuração das partículas
-particlesJS("particles-js", {
-    particles: {
-        number: { value: 80 },
-        color: { value: "#8a2be2" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5 },
-        size: { value: 3 },
-        line_linked: { enable: true, distance: 150 }
+// Verifica o status de login
+async function checkAuth() {
+    try {
+        const response = await fetch('/api/user');
+        if (response.ok) {
+            const user = await response.json();
+            showUserProfile(user);
+        }
+    } catch (error) {
+        console.error('Erro ao verificar autenticação:', error);
     }
-});
+}
 
-// Sistema de login com Discord (simulação)
-document.getElementById('discord-login').addEventListener('click', function() {
-    // Simulação de dados do usuário
-    const user = {
-        username: "UsuarioExemplo",
-        avatar: "https://cdn.discordapp.com/embed/avatars/0.png"
-    };
-    
-    // Mostrar perfil
-    document.getElementById('profile-avatar').src = user.avatar;
+// Mostra o perfil do usuário
+function showUserProfile(user) {
+    document.getElementById('profile-avatar').src = 
+        user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'assets/default-avatar.png';
     document.getElementById('profile-username').textContent = user.username;
+    document.getElementById('profile-discriminator').textContent = `#${user.discriminator}`;
     document.getElementById('login-form').style.display = 'none';
     document.getElementById('profile-section').style.display = 'block';
-    
-    // Salvar no localStorage
-    localStorage.setItem('lunaHubUser', JSON.stringify(user));
+}
+
+// Event Listeners
+document.getElementById('discord-login').addEventListener('click', () => {
+    window.location.href = '/auth/discord';
 });
 
-// Botão de logout
-document.getElementById('logout-btn').addEventListener('click', function() {
-    localStorage.removeItem('lunaHubUser');
-    document.getElementById('login-form').style.display = 'block';
-    document.getElementById('profile-section').style.display = 'none';
+document.getElementById('logout-btn').addEventListener('click', () => {
+    window.location.href = '/logout';
 });
 
-// Verificar se já está logado ao carregar
-window.addEventListener('DOMContentLoaded', function() {
-    const user = localStorage.getItem('lunaHubUser');
-    if (user) {
-        const userData = JSON.parse(user);
-        document.getElementById('profile-avatar').src = userData.avatar;
-        document.getElementById('profile-username').textContent = userData.username;
-        document.getElementById('login-form').style.display = 'none';
-        document.getElementById('profile-section').style.display = 'block';
-    }
-});
-
-// Rolagem suave
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
+// Inicialização
+document.addEventListener('DOMContentLoaded', checkAuth);
