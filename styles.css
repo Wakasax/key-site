@@ -7,7 +7,7 @@
 
 body {
     /* Imagem de fundo com gradiente como fallback */
-    background: linear-gradient(180deg, #E6E6FA 0%, #483D8B 100%), url('background.jpg') no-repeat center center/cover;
+    background: linear-gradient(180deg, #E6E6FA 0%, #483D8B 100%), url('background.png') no-repeat center center/cover;
     color: #fff;
     min-height: 100vh;
 }
