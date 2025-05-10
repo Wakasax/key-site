@@ -1,327 +1,41 @@
-/* Estilos Gerais */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --primary: #8a2be2;
+    --secondary: #9370db;
+    --discord: #5865F2;
+    --dark: #0f0c29;
+    --light: #f8fafc;
+    --glass: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
 }
 
+/* Estilos gerais */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: #fff;
-    line-height: 1.6;
-    min-height: 100vh;
-    overflow-x: hidden;
+    background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+    color: var(--light);
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* Cabeçalho */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 5%;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
-
-.logo h1 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-nav ul li a {
-    font-weight: 500;
-    transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-}
-
-nav ul li a:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-nav ul li a.active {
-    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
-    color: white;
-}
-
-/* Seções */
-section {
-    padding: 7rem 5% 3rem;
-    min-height: 100vh;
-}
-
-.hero {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: url('https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=2232&auto=format&fit=crop') no-repeat center center/cover;
-    position: relative;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 0;
-}
-
-.hero .glass-container {
-    position: relative;
-    z-index: 1;
-}
-
+/* Efeito glass */
 .glass-container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 2.5rem;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-    max-width: 900px;
-    margin: 0 auto;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
 }
 
-.glass-container h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.glass-container p {
-    margin-bottom: 1.5rem;
-    font-weight: 300;
-}
-
-/* Botões */
-.cta-button, .download-button, .discord-button {
-    display: inline-block;
-    padding: 12px 30px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-}
-
-.cta-button {
-    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
-    color: white;
-}
-
-.download-button {
-    background: linear-gradient(45deg, #2575fc 0%, #6a11cb 100%);
-    color: white;
-}
-
-.discord-button {
-    background: #5865F2;
-    color: white;
-}
-
-.cta-button:hover, .download-button:hover, .discord-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Lista de Scripts */
-.script-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-    margin: 2rem 0;
-}
-
-.script-list li {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 1rem;
-    border-radius: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
-}
-
-.script-list li:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-3px);
-}
-
-/* Código do Script */
-.script-code {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1.5rem 0;
-    overflow-x: auto;
-}
-
-.script-code code {
-    font-family: 'Courier New', Courier, monospace;
-    color: #f8f8f8;
-}
-
-/* Seção de Login */
-.login-section {
+/* Seção de login */
+.auth-section {
+    min-height: 100vh;
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    padding: 2rem;
 }
 
-.login-container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 450px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-}
-
-.login-container h2 {
-    color: #fff;
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-    text-align: center;
-    background: none;
-    -webkit-background-clip: initial;
-    background-clip: initial;
-    color: inherit;
-}
-
-.input-group {
-    margin-bottom: 1.5rem;
-}
-
-.input-group label {
-    display: block;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    font-weight: 400;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.input-group input:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.4);
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.checkbox-group {
+.discord-auth-btn {
+    background: var(--discord);
     display: flex;
     align-items: center;
-    margin-bottom: 1.5rem;
-    color: #fff;
+    justify-content: center;
+    gap: 10px;
 }
 
-.checkbox-group input {
-    margin-right: 10px;
-}
-
-.login-button {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 1.5rem;
-}
-
-.login-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
-}
-
-.switch-auth {
-    text-align: center;
-    color: #fff;
-}
-
-.switch-auth a {
-    color: #6a11cb;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.switch-auth a:hover {
-    color: #2575fc;
-}
-
-/* Rodapé */
-footer {
-    text-align: center;
-    padding: 2rem;
-    background: rgba(0, 0, 0, 0.3);
-    margin-top: auto;
-}
-
-footer p {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        padding: 1rem;
-    }
-
-    nav ul {
-        margin-top: 1rem;
-        gap: 1rem;
-    }
-
-    .glass-container {
-        padding: 1.5rem;
-    }
-
-    .script-list {
-        grid-template-columns: 1fr;
-    }
-}
+/* ... outros estilos ... */
