@@ -6,14 +6,14 @@
     <title>Luna Hub | Premium Roblox Scripts</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="particles-js"></div>
 
     <header>
         <div class="logo">
-            <img src="assets/images/logo.png" alt="Luna Hub Logo">
+            <img src="assets/logo.png" alt="Luna Hub Logo">
             <h1>Luna Hub</h1>
         </div>
         <nav>
@@ -27,19 +27,39 @@
         </nav>
     </header>
 
-    <!-- Seções do site (hero, scripts, get-key, discord) -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>Luna Hub Premium</h2>
+            <p>Os melhores scripts para Roblox com suporte a diversos jogos!</p>
+            <a href="#scripts" class="cta-button">
+                <i class="fas fa-rocket"></i> Explorar Scripts
+            </a>
+        </div>
+    </section>
+
+    <section id="scripts" class="section">
+        <div class="glass-container">
+            <h2>Nossos Scripts</h2>
+            <div class="script-grid">
+                <div class="script-card">
+                    <i class="fas fa-ghost"></i>
+                    <h3>Project Slayers</h3>
+                </div>
+                <!-- Mais scripts aqui -->
+            </div>
+        </div>
+    </section>
 
     <section id="login" class="auth-section">
         <div class="glass-container auth-container">
             <div class="auth-header">
                 <h2>Login com Discord</h2>
-                <p>Acesse sua conta Luna Hub usando sua conta Discord</p>
+                <p>Acesse sua conta Luna Hub</p>
             </div>
             
             <div class="profile-section" id="profile-section">
                 <img src="" alt="Avatar" class="profile-avatar" id="profile-avatar">
                 <h3 class="profile-username" id="profile-username"></h3>
-                <p class="profile-discriminator" id="profile-discriminator"></p>
                 <button class="cta-button" id="logout-btn">
                     <i class="fas fa-sign-out-alt"></i> Sair
                 </button>
@@ -54,12 +74,10 @@
     </section>
 
     <footer>
-        <!-- Conteúdo do rodapé -->
+        <p>© 2023 Luna Hub. Todos os direitos reservados.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="scripts/particles.js"></script>
-    <script src="scripts/auth.js"></script>
-    <script src="scripts/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
