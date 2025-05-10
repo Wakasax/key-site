@@ -2,20 +2,21 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
     /* Imagem de fundo com gradiente como fallback */
     background: linear-gradient(180deg, #E6E6FA 0%, #483D8B 100%), url('background.png') no-repeat center center/cover;
+    background-attachment: fixed;
     color: #fff;
     min-height: 100vh;
 }
 
 header {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,29 +24,35 @@ header {
     width: 100%;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo h1 {
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: 700;
     color: #B388FF;
+    letter-spacing: 1px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 30px;
 }
 
 nav ul li a {
     color: #fff;
     text-decoration: none;
     font-size: 16px;
-    transition: color 0.3s;
+    font-weight: 400;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 nav ul li a:hover {
     color: #B388FF;
+    transform: translateY(-2px);
+    display: inline-block;
 }
 
 .hero {
@@ -54,52 +61,69 @@ nav ul li a:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
+    padding: 0 20px;
 }
 
 .glass-container {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 40px;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    max-width: 800px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    padding: 50px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 900px;
     width: 90%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.glass-container:hover {
+    transform: translateY(-5px);
 }
 
 .hero h2 {
-    font-size: 48px;
+    font-size: 50px;
+    font-weight: 700;
     margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .hero p {
     font-size: 20px;
+    font-weight: 300;
     margin-bottom: 30px;
+    color: #E6E6FA;
 }
 
 .cta-button, .download-button, .discord-button {
     background: #B388FF;
     color: #fff;
-    padding: 12px 24px;
+    padding: 14px 28px;
     text-decoration: none;
-    border-radius: 25px;
+    border-radius: 50px;
     font-size: 18px;
-    transition: background 0.3s;
+    font-weight: 500;
+    transition: background 0.3s ease, transform 0.3s ease;
     display: inline-block;
+    box-shadow: 0 5px 15px rgba(179, 136, 255, 0.4);
 }
 
 .cta-button:hover, .download-button:hover, .discord-button:hover {
     background: #8E66CC;
+    transform: translateY(-3px);
 }
 
 .section {
-    padding: 60px 20px;
+    padding: 80px 20px;
     text-align: center;
 }
 
 .section h2 {
-    font-size: 36px;
+    font-size: 40px;
+    font-weight: 600;
     margin-bottom: 20px;
     color: #B388FF;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .script-list {
@@ -107,8 +131,8 @@ nav ul li a:hover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    margin: 20px auto;
-    max-width: 800px;
+    margin: 30px auto;
+    max-width: 900px;
 }
 
 .script-list li {
@@ -116,27 +140,46 @@ nav ul li a:hover {
     padding: 15px;
     border-radius: 10px;
     font-size: 18px;
+    font-weight: 300;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.script-list li:hover {
+    transform: scale(1.05);
+}
+
+.script-code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    word-wrap: break-word;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 footer {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    padding: 30px;
     text-align: center;
     font-size: 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: 300;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
     nav ul {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
     }
 
     .hero h2 {
-        font-size: 32px;
+        font-size: 36px;
     }
 
     .hero p {
@@ -144,6 +187,10 @@ footer {
     }
 
     .section h2 {
-        font-size: 28px;
+        font-size: 30px;
+    }
+
+    .glass-container {
+        padding: 30px;
     }
 }
