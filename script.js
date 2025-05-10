@@ -1,34 +1,45 @@
-// Verifica o status de login
-async function checkAuth() {
-    try {
-        const response = await fetch('/api/user');
-        if (response.ok) {
-            const user = await response.json();
-            showUserProfile(user);
+document.addEventListener('DOMContentLoaded', async () => {
+    const loginForm = document.getElementById('login-form');
+    const profileSection = document.getElementById('profile-section');
+    const discordLoginBtn = document.getElementById('discord-login');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    // Verifica se o usuário está logado
+    async function checkAuth() {
+        try {
+            const response = await fetch('/api/user');
+            if (response.ok) {
+                const user = await response.json();
+                showUserProfile(user);
+            }
+        } catch (error) {
+            console.error('Erro ao verificar autenticação:', error);
         }
-    } catch (error) {
-        console.error('Erro ao verificar autenticação:', error);
     }
-}
 
-// Mostra o perfil do usuário
-function showUserProfile(user) {
-    document.getElementById('profile-avatar').src = 
-        user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : 'assets/default-avatar.png';
-    document.getElementById('profile-username').textContent = user.username;
-    document.getElementById('profile-discriminator').textContent = `#${user.discriminator}`;
-    document.getElementById('login-form').style.display = 'none';
-    document.getElementById('profile-section').style.display = 'block';
-}
+    // Mostra o perfil do usuário
+    function showUserProfile(user) {
+        const avatarUrl = user.avatar 
+            ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`
+            : 'https://cdn.discordapp.com/embed/avatars/0.png';
 
-// Event Listeners
-document.getElementById('discord-login').addEventListener('click', () => {
-    window.location.href = '/auth/discord';
+        document.getElementById('profile-avatar').src = avatarUrl;
+        document.getElementById('profile-username').textContent = `${user.username}#${user.discriminator}`;
+        document.getElementById('profile-email').textContent = user.email || '';
+
+        loginForm.classList.add('hidden');
+        profileSection.classList.remove('hidden');
+    }
+
+    // Event listeners
+    discordLoginBtn.addEventListener('click', () => {
+        window.location.href = '/auth/discord';
+    });
+
+    logoutBtn.addEventListener('click', () => {
+        window.location.href = '/logout';
+    });
+
+    // Verifica autenticação ao carregar
+    await checkAuth();
 });
-
-document.getElementById('logout-btn').addEventListener('click', () => {
-    window.location.href = '/logout';
-});
-
-// Inicialização
-document.addEventListener('DOMContentLoaded', checkAuth);
