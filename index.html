@@ -3,225 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login com Discord | Luna Hub</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Tigrinho Game - Jogo Divertido!</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #5865F2;
-            --primary-dark: #4752C4;
-            --dark: #0f0c29;
-            --light: #f8fafc;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
-            min-height: 100vh;
-            color: var(--light);
-        }
-        
-        .glass-container {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-        }
-        
-        .discord-btn {
-            transition: all 0.3s ease;
-            background: var(--primary);
-        }
-        
-        .discord-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.4);
-        }
-        
-        .profile-avatar {
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
-        }
-        
-        .logout-btn {
-            transition: all 0.3s ease;
-        }
-        
-        .logout-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-    </style>
 </head>
-<body class="flex items-center justify-center p-4">
-    <div class="glass-container rounded-2xl p-8 w-full max-w-md">
-        <!-- Logo -->
-        <div class="text-center mb-8">
-            <img src="https://i.imgur.com/JqYeZLn.png" alt="Luna Hub Logo" class="w-20 mx-auto mb-4">
-            <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">Luna Hub</h1>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="logo">
+            <img src="images/tigre-logo.png" alt="Tigrinho Logo">
+            <h1>TIGRINHO GAME</h1>
         </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#game">Jogar</a></li>
+                <li><a href="#memes">Memes</a></li>
+                <li><a href="#about">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <!-- Formulário de Login -->
-        <div id="login-form" class="fade-in">
-            <h2 class="text-2xl font-bold text-center mb-6">Acesse sua conta</h2>
-            <p class="text-gray-300 text-center mb-8">Conecte-se usando sua conta do Discord para acessar todos os recursos</p>
-            
-            <button id="discord-login" class="discord-btn w-full text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center mb-6">
-                <i class="fab fa-discord text-xl mr-3"></i>
-                Entrar com Discord
-            </button>
-            
-            <div class="flex items-center mb-6">
-                <div class="flex-1 border-t border-gray-600"></div>
-                <span class="px-4 text-gray-400">OU</span>
-                <div class="flex-1 border-t border-gray-600"></div>
-            </div>
-            
-            <div class="space-y-4">
-                <div>
-                    <label for="username" class="block text-sm font-medium mb-1">Nome de usuário</label>
-                    <input type="text" id="username" class="w-full bg-gray-700 bg-opacity-50 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                </div>
-                
-                <div>
-                    <label for="password" class="block text-sm font-medium mb-1">Senha</label>
-                    <input type="password" id="password" class="w-full bg-gray-700 bg-opacity-50 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                </div>
-                
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="remember" class="h-4 w-4 text-purple-500 rounded focus:ring-purple-500 border-gray-600">
-                        <label for="remember" class="ml-2 text-sm">Lembrar de mim</label>
-                    </div>
-                    <a href="#" class="text-sm text-purple-400 hover:underline">Esqueceu a senha?</a>
-                </div>
-                
-                <button class="w-full bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition-opacity">
-                    Entrar
-                </button>
-            </div>
-            
-            <p class="text-center mt-6 text-gray-400">
-                Não tem uma conta? <a href="#" class="text-purple-400 hover:underline">Registre-se</a>
-            </p>
+    <!-- Seção Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Jogue com o <span>Tigrinho</span>!</h2>
+            <p>Diversão garantida sem gastar nada! 🐅</p>
+            <a href="#game" class="btn">JOGAR AGORA</a>
         </div>
-
-        <!-- Perfil do Usuário (inicialmente oculto) -->
-        <div id="profile-section" class="hidden text-center fade-in">
-            <img id="profile-avatar" src="" alt="Avatar" class="profile-avatar w-24 h-24 rounded-full mx-auto mb-4">
-            <h2 id="profile-username" class="text-2xl font-bold mb-1"></h2>
-            <p id="profile-email" class="text-gray-400 mb-6"></p>
-            
-            <div class="grid grid-cols-2 gap-4 mb-6">
-                <div class="bg-gray-700 bg-opacity-50 rounded-lg p-3">
-                    <p class="text-sm text-gray-400">ID</p>
-                    <p id="profile-id" class="font-mono text-sm"></p>
-                </div>
-                <div class="bg-gray-700 bg-opacity-50 rounded-lg p-3">
-                    <p class="text-sm text-gray-400">Conta desde</p>
-                    <p id="profile-created" class="text-sm"></p>
-                </div>
-            </div>
-            
-            <button id="logout-btn" class="logout-btn w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center justify-center">
-                <i class="fas fa-sign-out-alt mr-2"></i>
-                Sair da conta
-            </button>
+        <div class="hero-image">
+            <img src="images/tigre-hero.png" alt="Tigrinho Feliz">
         </div>
-    </div>
+    </section>
 
+    <!-- Seção do Jogo -->
+    <section class="game-section" id="game">
+        <h2>🐯 JOGO DO TIGRINHO 🐯</h2>
+        <div class="game-container">
+            <div class="slot-machine">
+                <div class="slot" id="slot1">🍋</div>
+                <div class="slot" id="slot2">🍒</div>
+                <div class="slot" id="slot3">🐯</div>
+            </div>
+            <button class="spin-btn" onclick="spin()">GIRAR!</button>
+            <p class="result" id="result">Clique em "GIRAR" para jogar!</p>
+        </div>
+    </section>
+
+    <!-- Seção de Memes -->
+    <section class="memes-section" id="memes">
+        <h2>MEMES DO TIGRINHO 😆</h2>
+        <div class="gallery">
+            <div class="meme-card">
+                <img src="images/meme1.jpg" alt="Meme 1">
+                <p>"Quando você ganha no Tigrinho..."</p>
+            </div>
+            <div class="meme-card">
+                <img src="images/meme2.jpg" alt="Meme 2">
+                <p>"Tigrinho depois do café..."</p>
+            </div>
+            <div class="meme-card">
+                <img src="images/meme3.jpg" alt="Meme 3">
+                <p>"Tigrinho vs. Reality"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer id="about">
+        <p>© 2024 Tigrinho Game - Apenas para diversão! Sem apostas reais.</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </footer>
+
+    <!-- Script do Jogo -->
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Elementos da DOM
-            const loginForm = document.getElementById('login-form');
-            const profileSection = document.getElementById('profile-section');
-            const discordLoginBtn = document.getElementById('discord-login');
-            const logoutBtn = document.getElementById('logout-btn');
-            
-            // URLs da API (substitua pelas suas URLs reais)
-            const API_BASE = 'http://localhost:3000';
-            const DISCORD_AUTH_URL = `${API_BASE}/auth/discord`;
-            const USER_API_URL = `${API_BASE}/api/user`;
-            const LOGOUT_URL = `${API_BASE}/logout`;
-            
-            // Verifica se o usuário está logado
-            async function checkAuth() {
-                try {
-                    const response = await fetch(USER_API_URL, {
-                        credentials: 'include' // Importante para enviar cookies
-                    });
+        function spin() {
+            const slots = ["🍒", "🍋", "🍊", "⭐", "🐯", "7️⃣"];
+            const slot1 = document.getElementById("slot1");
+            const slot2 = document.getElementById("slot2");
+            const slot3 = document.getElementById("slot3");
+            const result = document.getElementById("result");
+
+            // Animação de rotação
+            let spins = 0;
+            const spinInterval = setInterval(() => {
+                slot1.textContent = slots[Math.floor(Math.random() * slots.length)];
+                slot2.textContent = slots[Math.floor(Math.random() * slots.length)];
+                slot3.textContent = slots[Math.floor(Math.random() * slots.length)];
+                spins++;
+                if (spins >= 10) {
+                    clearInterval(spinInterval);
                     
-                    if (response.ok) {
-                        const user = await response.json();
-                        showUserProfile(user);
+                    // Resultado final
+                    const final1 = slots[Math.floor(Math.random() * slots.length)];
+                    const final2 = slots[Math.floor(Math.random() * slots.length)];
+                    const final3 = slots[Math.floor(Math.random() * slots.length)];
+
+                    slot1.textContent = final1;
+                    slot2.textContent = final2;
+                    slot3.textContent = final3;
+
+                    // Verifica se ganhou
+                    if (final1 === final2 && final2 === final3) {
+                        result.textContent = "🎉 PARABÉNS! VOCÊ GANHOU! 🎉";
+                    } else {
+                        result.textContent = "Tente novamente! Quase lá!";
                     }
-                } catch (error) {
-                    console.error('Erro ao verificar autenticação:', error);
                 }
-            }
-            
-            // Mostra o perfil do usuário
-            function showUserProfile(user) {
-                // Formata a data de criação da conta
-                const createdAt = new Date(user.created_at || Date.now());
-                const formattedDate = createdAt.toLocaleDateString('pt-BR');
-                
-                // Atualiza os elementos da DOM
-                document.getElementById('profile-avatar').src = 
-                    user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256` 
-                               : 'https://cdn.discordapp.com/embed/avatars/0.png';
-                
-                document.getElementById('profile-username').textContent = 
-                    `${user.username || 'Usuário'}${user.discriminator ? `#${user.discriminator}` : ''}`;
-                
-                document.getElementById('profile-email').textContent = user.email || '';
-                document.getElementById('profile-id').textContent = user.id || 'N/A';
-                document.getElementById('profile-created').textContent = formattedDate;
-                
-                // Alterna as seções
-                loginForm.style.display = 'none';
-                profileSection.style.display = 'block';
-                profileSection.classList.add('fade-in');
-            }
-            
-            // Event Listeners
-            discordLoginBtn.addEventListener('click', () => {
-                window.location.href = DISCORD_AUTH_URL;
-            });
-            
-            logoutBtn.addEventListener('click', () => {
-                window.location.href = LOGOUT_URL;
-            });
-            
-            // Verifica autenticação ao carregar
-            await checkAuth();
-            
-            // Simulação de login manual (para demonstração)
-            document.querySelector('#login-form button:not(#discord-login)').addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Simula um usuário (remova isso em produção)
-                const mockUser = {
-                    id: '123456789012345678',
-                    username: 'UsuarioTeste',
-                    discriminator: '1234',
-                    email: 'usuario@example.com',
-                    avatar: null,
-                    created_at: Date.now()
-                };
-                
-                showUserProfile(mockUser);
-            });
-        });
+            }, 100);
+        }
     </script>
 </body>
 </html>
