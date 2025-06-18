@@ -1,122 +1,122 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tigrinho Game - Jogo Divertido!</title>
+    <title>Fortune Tiger - Luna Hub</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Cabeçalho -->
     <header>
         <div class="logo">
-            <img src="images/tigre-logo.png" alt="Tigrinho Logo">
-            <h1>TIGRINHO GAME</h1>
+            <h1>🐅 Fortune Tiger</h1>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#home">Início</a></li>
-                <li><a href="#game">Jogar</a></li>
-                <li><a href="#memes">Memes</a></li>
-                <li><a href="#about">Sobre</a></li>
-            </ul>
-        </nav>
+        <div class="user-info">
+            <div class="balance-display">
+                <span class="balance-label">Saldo:</span>
+                <span class="balance-amount">R$ <span id="balance">100.00</span></span>
+            </div>
+        </div>
     </header>
 
-    <!-- Seção Hero -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h2>Jogue com o <span>Tigrinho</span>!</h2>
-            <p>Diversão garantida sem gastar nada! 🐅</p>
-            <a href="#game" class="btn">JOGAR AGORA</a>
-        </div>
-        <div class="hero-image">
-            <img src="images/tigre-hero.png" alt="Tigrinho Feliz">
-        </div>
-    </section>
-
-    <!-- Seção do Jogo -->
-    <section class="game-section" id="game">
-        <h2>🐯 JOGO DO TIGRINHO 🐯</h2>
-        <div class="game-container">
-            <div class="slot-machine">
-                <div class="slot" id="slot1">🍋</div>
-                <div class="slot" id="slot2">🍒</div>
-                <div class="slot" id="slot3">🐯</div>
+    <main class="game-container">
+        <div class="slot-machine">
+            <div class="slot-header">
+                <h2>🐅 FORTUNE TIGER 🐅</h2>
+                <div class="jackpot-display">
+                    <span class="jackpot-label">JACKPOT</span>
+                    <span class="jackpot-amount">R$ 50.000</span>
+                </div>
             </div>
-            <button class="spin-btn" onclick="spin()">GIRAR!</button>
-            <p class="result" id="result">Clique em "GIRAR" para jogar!</p>
-        </div>
-    </section>
 
-    <!-- Seção de Memes -->
-    <section class="memes-section" id="memes">
-        <h2>MEMES DO TIGRINHO 😆</h2>
-        <div class="gallery">
-            <div class="meme-card">
-                <img src="images/meme1.jpg" alt="Meme 1">
-                <p>"Quando você ganha no Tigrinho..."</p>
+            <div class="reels-container">
+                <div class="reel" id="reel1">
+                    <div class="symbol">🐅</div>
+                    <div class="symbol">💰</div>
+                    <div class="symbol">🍀</div>
+                    <div class="symbol">💎</div>
+                    <div class="symbol">🔥</div>
+                </div>
+                <div class="reel" id="reel2">
+                    <div class="symbol">💰</div>
+                    <div class="symbol">🐅</div>
+                    <div class="symbol">💎</div>
+                    <div class="symbol">🍀</div>
+                    <div class="symbol">🔥</div>
+                </div>
+                <div class="reel" id="reel3">
+                    <div class="symbol">🍀</div>
+                    <div class="symbol">💎</div>
+                    <div class="symbol">🐅</div>
+                    <div class="symbol">💰</div>
+                    <div class="symbol">🔥</div>
+                </div>
             </div>
-            <div class="meme-card">
-                <img src="images/meme2.jpg" alt="Meme 2">
-                <p>"Tigrinho depois do café..."</p>
+
+            <div class="win-line" id="winLine"></div>
+
+            <div class="betting-section">
+                <div class="bet-controls">
+                    <button class="bet-btn" onclick="setBet(1)">R$ 1</button>
+                    <button class="bet-btn" onclick="setBet(5)">R$ 5</button>
+                    <button class="bet-btn active" onclick="setBet(10)">R$ 10</button>
+                    <button class="bet-btn" onclick="setBet(25)">R$ 25</button>
+                    <button class="bet-btn" onclick="setBet(50)">R$ 50</button>
+                </div>
+
+                <div class="current-bet">
+                    <span>Aposta: R$ <span id="currentBet">10.00</span></span>
+                </div>
+
+                <button class="spin-btn" id="spinBtn" onclick="spin()">
+                    <span class="spin-text">GIRAR</span>
+                    <div class="spin-loader" style="display: none;"></div>
+                </button>
             </div>
-            <div class="meme-card">
-                <img src="images/meme3.jpg" alt="Meme 3">
-                <p>"Tigrinho vs. Reality"</p>
+
+            <div class="paytable">
+                <h3>Tabela de Pagamento</h3>
+                <div class="pay-row">
+                    <span>🐅 🐅 🐅</span>
+                    <span>x50</span>
+                </div>
+                <div class="pay-row">
+                    <span>💰 💰 💰</span>
+                    <span>x25</span>
+                </div>
+                <div class="pay-row">
+                    <span>💎 💎 💎</span>
+                    <span>x15</span>
+                </div>
+                <div class="pay-row">
+                    <span>🍀 🍀 🍀</span>
+                    <span>x10</span>
+                </div>
+                <div class="pay-row">
+                    <span>🔥 🔥 🔥</span>
+                    <span>x5</span>
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- Rodapé -->
-    <footer id="about">
-        <p>© 2024 Tigrinho Game - Apenas para diversão! Sem apostas reais.</p>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
+        <div class="history-panel">
+            <h3>Últimos Resultados</h3>
+            <div class="history-list" id="historyList">
+                <!-- Histórico será preenchido via JavaScript -->
+            </div>
         </div>
-    </footer>
+    </main>
 
-    <!-- Script do Jogo -->
-    <script>
-        function spin() {
-            const slots = ["🍒", "🍋", "🍊", "⭐", "🐯", "7️⃣"];
-            const slot1 = document.getElementById("slot1");
-            const slot2 = document.getElementById("slot2");
-            const slot3 = document.getElementById("slot3");
-            const result = document.getElementById("result");
+    <div class="win-notification" id="winNotification">
+        <div class="win-content">
+            <h2>🎉 PARABÉNS! 🎉</h2>
+            <p>Você ganhou <span id="winAmount">R$ 0.00</span>!</p>
+        </div>
+    </div>
 
-            // Animação de rotação
-            let spins = 0;
-            const spinInterval = setInterval(() => {
-                slot1.textContent = slots[Math.floor(Math.random() * slots.length)];
-                slot2.textContent = slots[Math.floor(Math.random() * slots.length)];
-                slot3.textContent = slots[Math.floor(Math.random() * slots.length)];
-                spins++;
-                if (spins >= 10) {
-                    clearInterval(spinInterval);
-                    
-                    // Resultado final
-                    const final1 = slots[Math.floor(Math.random() * slots.length)];
-                    const final2 = slots[Math.floor(Math.random() * slots.length)];
-                    const final3 = slots[Math.floor(Math.random() * slots.length)];
+    <div class="particles" id="particles"></div>
 
-                    slot1.textContent = final1;
-                    slot2.textContent = final2;
-                    slot3.textContent = final3;
-
-                    // Verifica se ganhou
-                    if (final1 === final2 && final2 === final3) {
-                        result.textContent = "🎉 PARABÉNS! VOCÊ GANHOU! 🎉";
-                    } else {
-                        result.textContent = "Tente novamente! Quase lá!";
-                    }
-                }
-            }, 100);
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
