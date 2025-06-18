@@ -1,121 +1,163 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortune Tiger - Luna Hub</title>
+    <title>Fortune Tiger - Blaze Style</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <h1>🐅 Fortune Tiger</h1>
-        </div>
-        <div class="user-info">
-            <div class="balance-display">
-                <span class="balance-label">Saldo:</span>
-                <span class="balance-amount">R$ <span id="balance">100.00</span></span>
-            </div>
-        </div>
-    </header>
-
-    <main class="game-container">
-        <div class="slot-machine">
-            <div class="slot-header">
-                <h2>🐅 FORTUNE TIGER 🐅</h2>
-                <div class="jackpot-display">
-                    <span class="jackpot-label">JACKPOT</span>
-                    <span class="jackpot-amount">R$ 50.000</span>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon">🐅</span>
+                    <span class="logo-text">Fortune Tiger</span>
                 </div>
             </div>
+            <div class="header-center">
+                <div class="balance-display">
+                    <span class="balance-label">Saldo</span>
+                    <span class="balance-value">R$ <span id="balance">100.00</span></span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="deposit-btn">Depositar</button>
+            </div>
+        </header>
 
-            <div class="reels-container">
-                <div class="reel" id="reel1">
-                    <div class="symbol">🐅</div>
-                    <div class="symbol">💰</div>
-                    <div class="symbol">🍀</div>
-                    <div class="symbol">💎</div>
-                    <div class="symbol">🔥</div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Game Area -->
+            <div class="game-section">
+                <div class="game-header">
+                    <h1 class="game-title">
+                        <span class="tiger-icon">🐅</span>
+                        Fortune Tiger
+                    </h1>
+                    <div class="multiplier-display">
+                        <span class="multiplier-label">Próximo multiplicador</span>
+                        <span class="multiplier-value">×50.00</span>
+                    </div>
                 </div>
-                <div class="reel" id="reel2">
-                    <div class="symbol">💰</div>
-                    <div class="symbol">🐅</div>
-                    <div class="symbol">💎</div>
-                    <div class="symbol">🍀</div>
-                    <div class="symbol">🔥</div>
+
+                <!-- Slot Machine -->
+                <div class="slot-container">
+                    <div class="slot-machine">
+                        <div class="reels-wrapper">
+                            <div class="reel-item" id="reel1">
+                                <div class="symbol">🐅</div>
+                            </div>
+                            <div class="reel-item" id="reel2">
+                                <div class="symbol">💰</div>
+                            </div>
+                            <div class="reel-item" id="reel3">
+                                <div class="symbol">🍀</div>
+                            </div>
+                        </div>
+                        <div class="win-line-overlay" id="winLine"></div>
+                    </div>
                 </div>
-                <div class="reel" id="reel3">
-                    <div class="symbol">🍀</div>
-                    <div class="symbol">💎</div>
-                    <div class="symbol">🐅</div>
-                    <div class="symbol">💰</div>
-                    <div class="symbol">🔥</div>
+
+                <!-- Controls -->
+                <div class="game-controls">
+                    <div class="bet-controls">
+                        <div class="bet-label">Valor da aposta</div>
+                        <div class="bet-input-group">
+                            <button class="bet-btn minus" onclick="decreaseBet()">-</button>
+                            <div class="bet-display">R$ <span id="currentBet">10.00</span></div>
+                            <button class="bet-btn plus" onclick="increaseBet()">+</button>
+                        </div>
+                        <div class="quick-bets">
+                            <button class="quick-bet" onclick="setBet(1)">1</button>
+                            <button class="quick-bet" onclick="setBet(5)">5</button>
+                            <button class="quick-bet active" onclick="setBet(10)">10</button>
+                            <button class="quick-bet" onclick="setBet(25)">25</button>
+                            <button class="quick-bet" onclick="setBet(50)">50</button>
+                        </div>
+                    </div>
+                    
+                    <button class="play-button" id="spinBtn" onclick="spin()">
+                        <span class="play-text">Começar o jogo</span>
+                        <div class="play-loader" style="display: none;"></div>
+                    </button>
                 </div>
             </div>
 
-            <div class="win-line" id="winLine"></div>
-
-            <div class="betting-section">
-                <div class="bet-controls">
-                    <button class="bet-btn" onclick="setBet(1)">R$ 1</button>
-                    <button class="bet-btn" onclick="setBet(5)">R$ 5</button>
-                    <button class="bet-btn active" onclick="setBet(10)">R$ 10</button>
-                    <button class="bet-btn" onclick="setBet(25)">R$ 25</button>
-                    <button class="bet-btn" onclick="setBet(50)">R$ 50</button>
+            <!-- Sidebar -->
+            <div class="sidebar-section">
+                <!-- Recent Results -->
+                <div class="recent-panel">
+                    <h3 class="panel-title">Resultados recentes</h3>
+                    <div class="recent-list" id="historyList">
+                        <!-- Histórico preenchido via JavaScript -->
+                    </div>
                 </div>
 
-                <div class="current-bet">
-                    <span>Aposta: R$ <span id="currentBet">10.00</span></span>
+                <!-- Multipliers Table -->
+                <div class="multipliers-panel">
+                    <h3 class="panel-title">Multiplicadores</h3>
+                    <div class="multipliers-list">
+                        <div class="multiplier-item premium">
+                            <div class="mult-symbols">🐅🐅🐅</div>
+                            <div class="mult-value">×50</div>
+                        </div>
+                        <div class="multiplier-item gold">
+                            <div class="mult-symbols">💰💰💰</div>
+                            <div class="mult-value">×25</div>
+                        </div>
+                        <div class="multiplier-item diamond">
+                            <div class="mult-symbols">💎💎💎</div>
+                            <div class="mult-value">×15</div>
+                        </div>
+                        <div class="multiplier-item lucky">
+                            <div class="mult-symbols">🍀🍀🍀</div>
+                            <div class="mult-value">×10</div>
+                        </div>
+                        <div class="multiplier-item fire">
+                            <div class="mult-symbols">🔥🔥🔥</div>
+                            <div class="mult-value">×5</div>
+                        </div>
+                    </div>
                 </div>
 
-                <button class="spin-btn" id="spinBtn" onclick="spin()">
-                    <span class="spin-text">GIRAR</span>
-                    <div class="spin-loader" style="display: none;"></div>
-                </button>
+                <!-- Stats -->
+                <div class="stats-panel">
+                    <h3 class="panel-title">Estatísticas</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-value" id="wins">0</div>
+                            <div class="stat-label">Vitórias</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="streak">0</div>
+                            <div class="stat-label">Sequência</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </main>
+    </div>
 
-            <div class="paytable">
-                <h3>Tabela de Pagamento</h3>
-                <div class="pay-row">
-                    <span>🐅 🐅 🐅</span>
-                    <span>x50</span>
-                </div>
-                <div class="pay-row">
-                    <span>💰 💰 💰</span>
-                    <span>x25</span>
-                </div>
-                <div class="pay-row">
-                    <span>💎 💎 💎</span>
-                    <span>x15</span>
-                </div>
-                <div class="pay-row">
-                    <span>🍀 🍀 🍀</span>
-                    <span>x10</span>
-                </div>
-                <div class="pay-row">
-                    <span>🔥 🔥 🔥</span>
-                    <span>x5</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="history-panel">
-            <h3>Últimos Resultados</h3>
-            <div class="history-list" id="historyList">
-                <!-- Histórico será preenchido via JavaScript -->
-            </div>
-        </div>
-    </main>
-
-    <div class="win-notification" id="winNotification">
-        <div class="win-content">
-            <h2>🎉 PARABÉNS! 🎉</h2>
-            <p>Você ganhou <span id="winAmount">R$ 0.00</span>!</p>
+    <!-- Win Modal -->
+    <div class="win-modal" id="winNotification">
+        <div class="modal-backdrop"></div>
+        <div class="modal-card">
+            <div class="win-emoji">🎉</div>
+            <h2 class="win-title">Parabéns!</h2>
+            <p class="win-text">Você ganhou</p>
+            <div class="win-amount" id="winAmount">R$ 0.00</div>
+            <button class="continue-button" onclick="closeWinModal()">Continuar</button>
         </div>
     </div>
 
-    <div class="particles" id="particles"></div>
+    <!-- Particles -->
+    <div class="particles-overlay" id="particles"></div>
 
     <script src="script.js"></script>
 </body>
