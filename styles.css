@@ -1,90 +1,293 @@
-:root {
-    --primary: #8a2be2;
-    --secondary: #9370db;
-    --discord: #5865F2;
-    --dark: #0f0c29;
-    --light: #f8fafc;
-    --glass: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.15);
+/* Reset e Estilos Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
-    color: var(--light);
-    line-height: 1.6;
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffecd2 100%);
+    color: #333;
+    overflow-x: hidden;
 }
 
+/* Cabeçalho */
 header {
-    background: rgba(15, 12, 41, 0.8);
-    backdrop-filter: blur(10px);
+    background: #FF6B00;
     padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 50px;
+    animation: pulse 2s infinite;
 }
 
 .logo h1 {
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: white;
+    font-weight: 900;
+    font-size: 1.8rem;
 }
 
-.glass-container {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    border: 1px solid var(--glass-border);
-    padding: 2rem;
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
 }
 
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+}
+
+nav a:hover {
+    color: #FFD700;
+    transform: translateY(-2px);
+}
+
+/* Seção Hero */
 .hero {
-    height: 100vh;
+    padding: 8rem 5% 4rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: space-between;
+    min-height: 100vh;
 }
 
-.cta-button {
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
+.hero-content {
+    max-width: 600px;
+}
+
+.hero h2 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: fadeInUp 1s ease;
+}
+
+.hero span {
+    color: #FF6B00;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.btn {
+    background: #FF6B00;
     color: white;
     padding: 12px 30px;
     border-radius: 50px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
 }
 
-.auth-section {
-    min-height: 100vh;
+.btn:hover {
+    background: #FF4500;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
+}
+
+.hero-image img {
+    max-width: 400px;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Seção do Jogo */
+.game-section {
+    padding: 5rem 5%;
+    text-align: center;
+    background: white;
+}
+
+.game-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #FF6B00;
+}
+
+.slot-machine {
     display: flex;
-    align-items: center;
     justify-content: center;
+    gap: 20px;
+    margin: 2rem 0;
 }
 
-.discord-auth-btn {
-    background: var(--discord);
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.profile-avatar {
+.slot {
+    background: #FFD700;
     width: 100px;
     height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--secondary);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
 }
 
+.spin-btn {
+    background: #FF6B00;
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+}
+
+.spin-btn:hover {
+    background: #FF4500;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
+}
+
+.result {
+    margin-top: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #FF6B00;
+}
+
+/* Seção de Memes */
+.memes-section {
+    padding: 5rem 5%;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+.memes-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #FF6B00;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.meme-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.meme-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.meme-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.meme-card p {
+    padding: 1rem;
+    font-weight: 600;
+}
+
+/* Rodapé */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+.social-icons {
+    margin-top: 1rem;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: all 0.3s;
+}
+
+.social-icons a:hover {
+    color: #FFD700;
+    transform: scale(1.2);
+}
+
+/* Animações */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
     header {
         flex-direction: column;
+        padding: 1rem;
+    }
+
+    nav ul {
+        margin-top: 1rem;
+        gap: 1rem;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 10rem;
+    }
+
+    .hero-image img {
+        max-width: 250px;
+        margin-top: 2rem;
+    }
+
+    .slot-machine {
+        flex-direction: column;
+        align-items: center;
     }
 }
