@@ -1,348 +1,272 @@
+// Estado do jogo
+let gameState = {
+    balance: 100.00,
+    currentBet: 10.00,
+    wins: 0,
+    streak: 0,
+    isSpinning: false,
+    history: []
+};
 
-class FortuneGame {
-    constructor() {
-        this.balance = 100.00;
-        this.currentBet = 10.00;
-        this.isSpinning = false;
-        this.history = [];
-        this.houseEdge = 0.15; // 15% de vantagem da casa
-        this.winStreak = 0;
-        this.lossStreak = 0;
-        
-        this.symbols = ['🐅', '💰', '🍀', '💎', '🔥'];
-        this.payouts = {
-            '🐅🐅🐅': 50,
-            '💰💰💰': 25,
-            '💎💎💎': 15,
-            '🍀🍀🍀': 10,
-            '🔥🔥🔥': 5
-        };
-        
-        this.updateDisplay();
-        this.loadHistory();
-    }
-    
-    updateDisplay() {
-        document.getElementById('balance').textContent = this.balance.toFixed(2);
-        document.getElementById('currentBet').textContent = this.currentBet.toFixed(2);
-    }
-    
-    setBet(amount) {
-        if (this.isSpinning) return;
-        
-        this.currentBet = amount;
-        
-        // Atualizar botões ativos
-        document.querySelectorAll('.bet-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        event.target.classList.add('active');
-        
-        this.updateDisplay();
-    }
-    
-    calculateWinProbability() {
-        // Algoritmo que favorece a casa
-        let baseProbability = 0.25; // 25% chance base de ganhar
-        
-        // Se o jogador está ganhando muito, reduzir probabilidade
-        if (this.winStreak >= 2) {
-            baseProbability *= 0.3;
-        }
-        
-        // Se o jogador está perdendo muito, aumentar um pouco
-        if (this.lossStreak >= 5) {
-            baseProbability *= 1.5;
-        }
-        
-        // Reduzir probabilidade baseada na vantagem da casa
-        baseProbability *= (1 - this.houseEdge);
-        
-        // Se a banca está baixa, reduzir ainda mais
-        if (this.balance < 20) {
-            baseProbability *= 0.5;
-        }
-        
-        return Math.min(baseProbability, 0.35); // Máximo 35% de chance
-    }
-    
-    generateResult() {
-        const winProbability = this.calculateWinProbability();
-        const isWin = Math.random() < winProbability;
-        
-        let result = [];
-        
-        if (isWin) {
-            // Gerar combinação vencedora
-            const winningCombos = Object.keys(this.payouts);
-            const combo = winningCombos[Math.floor(Math.random() * winningCombos.length)];
-            result = combo.match(/./gu);
-        } else {
-            // Gerar combinação perdedora
-            do {
-                result = [
-                    this.symbols[Math.floor(Math.random() * this.symbols.length)],
-                    this.symbols[Math.floor(Math.random() * this.symbols.length)],
-                    this.symbols[Math.floor(Math.random() * this.symbols.length)]
-                ];
-            } while (this.isWinningCombination(result));
-        }
-        
-        return result;
-    }
-    
-    isWinningCombination(result) {
-        const combo = result.join('');
-        return this.payouts.hasOwnProperty(combo);
-    }
-    
-    async spin() {
-        if (this.isSpinning || this.balance < this.currentBet) {
-            if (this.balance < this.currentBet) {
-                this.showNotification('Saldo insuficiente!', 'error');
-            }
-            return;
-        }
-        
-        this.isSpinning = true;
-        this.balance -= this.currentBet;
-        this.updateDisplay();
-        
-        // Atualizar botão de spin
-        const spinBtn = document.getElementById('spinBtn');
-        spinBtn.disabled = true;
-        spinBtn.querySelector('.spin-text').style.display = 'none';
-        spinBtn.querySelector('.spin-loader').style.display = 'block';
-        
-        // Gerar resultado
-        const result = this.generateResult();
-        
-        // Animar roletas
-        await this.animateReels(result);
-        
-        // Verificar vitória
-        const isWin = this.isWinningCombination(result);
-        let winAmount = 0;
-        
-        if (isWin) {
-            const combo = result.join('');
-            const multiplier = this.payouts[combo];
-            winAmount = this.currentBet * multiplier;
-            this.balance += winAmount;
-            this.winStreak++;
-            this.lossStreak = 0;
-            
-            await this.showWinEffects(winAmount);
-        } else {
-            this.lossStreak++;
-            this.winStreak = 0;
-        }
-        
-        // Adicionar ao histórico
-        this.addToHistory(result, isWin, winAmount);
-        
-        // Resetar botão
-        spinBtn.disabled = false;
-        spinBtn.querySelector('.spin-text').style.display = 'inline';
-        spinBtn.querySelector('.spin-loader').style.display = 'none';
-        
-        this.isSpinning = false;
-        this.updateDisplay();
-    }
-    
-    async animateReels(result) {
-        const reels = document.querySelectorAll('.reel');
-        
-        // Adicionar classe de spinning
-        reels.forEach(reel => reel.classList.add('spinning'));
-        
-        // Aguardar animação
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Atualizar símbolos
-        reels.forEach((reel, index) => {
-            reel.classList.remove('spinning');
-            reel.querySelector('.symbol').textContent = result[index];
-        });
-        
-        // Se for vitória, animar símbolos
-        if (this.isWinningCombination(result)) {
-            reels.forEach(reel => {
-                reel.querySelector('.symbol').classList.add('winning');
-            });
-            
-            // Mostrar linha de vitória
-            const winLine = document.getElementById('winLine');
-            winLine.classList.add('active');
-            
-            setTimeout(() => {
-                winLine.classList.remove('active');
-                reels.forEach(reel => {
-                    reel.querySelector('.symbol').classList.remove('winning');
-                });
-            }, 3000);
-        }
-    }
-    
-    async showWinEffects(amount) {
-        // Mostrar notificação de vitória
-        const notification = document.getElementById('winNotification');
-        const winAmountSpan = document.getElementById('winAmount');
-        
-        winAmountSpan.textContent = `R$ ${amount.toFixed(2)}`;
-        notification.classList.add('show');
-        
-        // Criar partículas
-        this.createParticles();
-        
-        // Fechar notificação após 3 segundos
-        setTimeout(() => {
-            notification.classList.remove('show');
-        }, 3000);
-    }
-    
-    createParticles() {
-        const particlesContainer = document.getElementById('particles');
-        const particles = ['🎉', '💰', '🎊', '⭐', '💎'];
-        
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.textContent = particles[Math.floor(Math.random() * particles.length)];
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 2 + 's';
-            particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
-            
-            particlesContainer.appendChild(particle);
-            
-            // Remover partícula após animação
-            setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.parentNode.removeChild(particle);
-                }
-            }, 5000);
-        }
-    }
-    
-    addToHistory(result, isWin, winAmount) {
-        const historyItem = {
-            symbols: result.join(' '),
-            isWin: isWin,
-            amount: isWin ? winAmount : -this.currentBet,
-            timestamp: new Date()
-        };
-        
-        this.history.unshift(historyItem);
-        if (this.history.length > 10) {
-            this.history.pop();
-        }
-        
-        this.updateHistoryDisplay();
-        this.saveHistory();
-    }
-    
-    updateHistoryDisplay() {
-        const historyList = document.getElementById('historyList');
-        historyList.innerHTML = '';
-        
-        this.history.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'history-item';
-            
-            div.innerHTML = `
-                <div class="history-symbols">${item.symbols}</div>
-                <div class="history-result ${item.isWin ? 'win' : 'lose'}">
-                    ${item.amount > 0 ? '+' : ''}R$ ${item.amount.toFixed(2)}
-                </div>
-            `;
-            
-            historyList.appendChild(div);
-        });
-    }
-    
-    saveHistory() {
-        localStorage.setItem('fortuneGameHistory', JSON.stringify(this.history));
-        localStorage.setItem('fortuneGameBalance', this.balance.toString());
-    }
-    
-    loadHistory() {
-        const savedHistory = localStorage.getItem('fortuneGameHistory');
-        const savedBalance = localStorage.getItem('fortuneGameBalance');
-        
-        if (savedHistory) {
-            this.history = JSON.parse(savedHistory);
-            this.updateHistoryDisplay();
-        }
-        
-        if (savedBalance) {
-            this.balance = parseFloat(savedBalance);
-            this.updateDisplay();
-        }
-    }
-    
-    showNotification(message, type = 'info') {
-        // Implementar notificação simples
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${type === 'error' ? '#ff4757' : '#ffd700'};
-            color: #000;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
-            z-index: 1001;
-            animation: slideIn 0.3s ease;
-        `;
-        notification.textContent = message;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.remove();
-        }, 3000);
-    }
-}
+// Símbolos do jogo
+const symbols = ['🐅', '💰', '💎', '🍀', '🔥'];
 
-// Inicializar o jogo quando a página carregar
-document.addEventListener('DOMContentLoaded', () => {
-    window.game = new FortuneGame();
+// Multiplicadores
+const multipliers = {
+    '🐅🐅🐅': 50,
+    '💰💰💰': 25,
+    '💎💎💎': 15,
+    '🍀🍀🍀': 10,
+    '🔥🔥🔥': 5
+};
+
+// Elementos DOM
+const balanceElement = document.getElementById('balance');
+const currentBetElement = document.getElementById('currentBet');
+const winsElement = document.getElementById('wins');
+const streakElement = document.getElementById('streak');
+const spinBtn = document.getElementById('spinBtn');
+const historyList = document.getElementById('historyList');
+const winNotification = document.getElementById('winNotification');
+const winAmount = document.getElementById('winAmount');
+
+// Inicializar jogo
+document.addEventListener('DOMContentLoaded', function() {
+    updateDisplay();
+    generateInitialHistory();
 });
 
-// Funções globais para os botões
-function setBet(amount) {
-    if (window.game) {
-        window.game.setBet(amount);
-    }
-}
-
+// Função para girar os rolos
 function spin() {
-    if (window.game) {
-        window.game.spin();
+    if (gameState.isSpinning || gameState.balance < gameState.currentBet) {
+        return;
+    }
+
+    gameState.isSpinning = true;
+    gameState.balance -= gameState.currentBet;
+
+    // Atualizar interface
+    spinBtn.disabled = true;
+    spinBtn.querySelector('.play-text').style.display = 'none';
+    spinBtn.querySelector('.play-loader').style.display = 'inline-block';
+
+    // Adicionar animação de spinning
+    const reels = document.querySelectorAll('.reel-item');
+    reels.forEach(reel => reel.classList.add('spinning'));
+
+    // Simular delay do spin
+    setTimeout(() => {
+        const result = generateSpinResult();
+        displayResult(result);
+
+        setTimeout(() => {
+            checkWin(result);
+            updateDisplay();
+            gameState.isSpinning = false;
+
+            // Resetar interface
+            spinBtn.disabled = false;
+            spinBtn.querySelector('.play-text').style.display = 'inline';
+            spinBtn.querySelector('.play-loader').style.display = 'none';
+
+            reels.forEach(reel => reel.classList.remove('spinning'));
+        }, 1000);
+    }, 2000);
+}
+
+// Gerar resultado do spin
+function generateSpinResult() {
+    // Algoritmo que favorece o jogador (como solicitado)
+    const winChance = Math.random();
+
+    if (winChance < 0.3) { // 30% chance de vitória
+        // Escolher um símbolo vencedor
+        const winningSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+        return [winningSymbol, winningSymbol, winningSymbol];
+    } else {
+        // Resultado perdedor
+        return [
+            symbols[Math.floor(Math.random() * symbols.length)],
+            symbols[Math.floor(Math.random() * symbols.length)],
+            symbols[Math.floor(Math.random() * symbols.length)]
+        ];
     }
 }
 
-// Adicionar efeitos visuais extras
-document.addEventListener('DOMContentLoaded', () => {
-    // Efeito de brilho no cabeçalho
-    const header = document.querySelector('header');
-    if (header) {
-        setInterval(() => {
-            header.style.boxShadow = '0 0 ' + (Math.random() * 20 + 10) + 'px rgba(255, 215, 0, 0.3)';
-        }, 2000);
+// Exibir resultado nos rolos
+function displayResult(result) {
+    const reel1 = document.getElementById('reel1').querySelector('.symbol');
+    const reel2 = document.getElementById('reel2').querySelector('.symbol');
+    const reel3 = document.getElementById('reel3').querySelector('.symbol');
+
+    reel1.textContent = result[0];
+    reel2.textContent = result[1];
+    reel3.textContent = result[2];
+}
+
+// Verificar vitória
+function checkWin(result) {
+    const resultString = result.join('');
+    const multiplier = multipliers[resultString];
+
+    if (multiplier) {
+        const winnings = gameState.currentBet * multiplier;
+        gameState.balance += winnings;
+        gameState.wins++;
+        gameState.streak++;
+
+        showWinAnimation(winnings);
+        addToHistory(result, true, winnings);
+        createParticles();
+
+        // Linha de vitória
+        const winLine = document.getElementById('winLine');
+        winLine.classList.add('active');
+
+        // Símbolos vencedores
+        const symbols = document.querySelectorAll('.symbol');
+        symbols.forEach(symbol => symbol.classList.add('winning'));
+
+        setTimeout(() => {
+            winLine.classList.remove('active');
+            symbols.forEach(symbol => symbol.classList.remove('winning'));
+        }, 3000);
+
+    } else {
+        gameState.streak = 0;
+        addToHistory(result, false, 0);
     }
-    
-    // Efeito parallax suave no fundo
-    document.addEventListener('mousemove', (e) => {
-        const mouseX = e.clientX / window.innerWidth;
-        const mouseY = e.clientY / window.innerHeight;
-        
-        document.body.style.background = `
-            linear-gradient(${135 + mouseX * 10}deg, 
-            #1a1a2e 0%, 
-            #16213e ${50 + mouseY * 10}%, 
-            #0f3460 100%)
+}
+
+// Mostrar animação de vitória
+function showWinAnimation(amount) {
+    winAmount.textContent = `R$ ${amount.toFixed(2)}`;
+    winNotification.classList.add('show');
+}
+
+// Fechar modal de vitória
+function closeWinModal() {
+    winNotification.classList.remove('show');
+}
+
+// Adicionar ao histórico
+function addToHistory(result, isWin, amount) {
+    const historyItem = {
+        symbols: result.join(''),
+        isWin: isWin,
+        amount: amount,
+        time: new Date()
+    };
+
+    gameState.history.unshift(historyItem);
+
+    if (gameState.history.length > 10) {
+        gameState.history.pop();
+    }
+
+    updateHistoryDisplay();
+}
+
+// Atualizar exibição do histórico
+function updateHistoryDisplay() {
+    historyList.innerHTML = '';
+
+    gameState.history.forEach(item => {
+        const historyElement = document.createElement('div');
+        historyElement.className = 'recent-item';
+
+        historyElement.innerHTML = `
+            <div class="recent-symbols">${item.symbols}</div>
+            <div class="recent-result ${item.isWin ? 'win' : 'lose'}">
+                ${item.isWin ? `+R$ ${item.amount.toFixed(2)}` : 'Perdeu'}
+            </div>
         `;
+
+        historyList.appendChild(historyElement);
     });
+}
+
+// Gerar histórico inicial
+function generateInitialHistory() {
+    for (let i = 0; i < 5; i++) {
+        const result = generateSpinResult();
+        const isWin = Math.random() < 0.2;
+        const amount = isWin ? gameState.currentBet * 5 : 0;
+
+        addToHistory(result, isWin, amount);
+    }
+}
+
+// Controles de aposta
+function increaseBet() {
+    if (gameState.currentBet < 50) {
+        gameState.currentBet += 1;
+        updateDisplay();
+        updateQuickBets();
+    }
+}
+
+function decreaseBet() {
+    if (gameState.currentBet > 1) {
+        gameState.currentBet -= 1;
+        updateDisplay();
+        updateQuickBets();
+    }
+}
+
+function setBet(amount) {
+    gameState.currentBet = amount;
+    updateDisplay();
+    updateQuickBets();
+}
+
+// Atualizar botões de aposta rápida
+function updateQuickBets() {
+    const quickBets = document.querySelectorAll('.quick-bet');
+    quickBets.forEach(btn => {
+        btn.classList.remove('active');
+        if (parseInt(btn.textContent) === gameState.currentBet) {
+            btn.classList.add('active');
+        }
+    });
+}
+
+// Atualizar exibição
+function updateDisplay() {
+    balanceElement.textContent = gameState.balance.toFixed(2);
+    currentBetElement.textContent = gameState.currentBet.toFixed(2);
+    winsElement.textContent = gameState.wins;
+    streakElement.textContent = gameState.streak;
+}
+
+// Criar partículas de celebração
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    const particleSymbols = ['🎉', '⭐', '💫', '🎊', '✨'];
+
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.textContent = particleSymbols[Math.floor(Math.random() * particleSymbols.length)];
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.animationDelay = Math.random() * 2 + 's';
+        particle.style.animationDuration = (3 + Math.random() * 2) + 's';
+
+        particlesContainer.appendChild(particle);
+
+        setTimeout(() => {
+            particle.remove();
+        }, 5000);
+    }
+}
+
+// Event listeners
+document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' && !gameState.isSpinning) {
+        e.preventDefault();
+        spin();
+    }
 });
+
+// Clique no backdrop do modal para fechar
+document.querySelector('.modal-backdrop')?.addEventListener('click', closeWinModal);
